@@ -1,0 +1,1 @@
+iex --sname hq --cookie cnode_ai_0 -S mix

@@ -14,7 +14,9 @@ defmodule TccAI.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger],
+     registered: [:commroom],
+     mod: { TccAI, [ :ok2 ] }]
   end
 
   # Dependencies can be Hex packages:
