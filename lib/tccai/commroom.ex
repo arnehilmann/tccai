@@ -18,7 +18,7 @@ defmodule TccAI.CommRoom do
     :io.format "[commroom] unit ~w created by ~w~n", [unit_id, builder]
   end
   defp handle_event(topic, data) do
-    :io.format "[commroom] unhandled topic ~w!~n", [topic]
+    :io.format "[commroom] ~w: ~w!~n", [topic, data]
   end
 
 
@@ -27,7 +27,6 @@ defmodule TccAI.CommRoom do
     { :noreply, state }
   end
   def handle_info({ :event, topic, data }, state) when is_atom(topic) do
-    :io.format "[commroom] incoming parsed event: ~s, ~w~n", [topic, data]
     handle_event(topic, data)
     { :noreply, state }
   end
