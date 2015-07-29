@@ -1,0 +1,1 @@
+iex --sname hq2 --cookie erlang_ai2 -S mix
