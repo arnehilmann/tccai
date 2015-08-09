@@ -31,7 +31,11 @@ defmodule TccAI.CommRoom do
     { :noreply, state }
   end
   def handle_info(:tick, state) do
-    :io.format "[commroom] tick~n"
+    # :io.format "[commroom] tick~n"
+    { :noreply, state }
+  end
+  def handle_info({selector, data}, state) do
+    :io.format "[commroom] unknown response ~s: ~w~n", [selector, data]
     { :noreply, state }
   end
   def handle_info(others, state) do
