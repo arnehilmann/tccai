@@ -1,4 +1,46 @@
 defmodule TccAI.Simple do
+  def build_random() do
+    import TccAI.Callbacks, only: :functions
+
+    #units = getTeamUnits
+    #IO.inspect units
+
+    #unitdefs = units
+    #|> Enum.map(&(unit_getDef &1))
+    #IO.inspect unitdefs
+
+    #is_builder = unitdefs
+    #|> Enum.map(&(unitDef_isBuilder &1))
+    #IO.inspect is_builder
+
+    Enum.each(getTeamUnits,
+      fn unitid ->
+        unitdef = unit_getDef unitid
+        if unitDef_isBuilder unitdef do
+          nr_commands = unit_getCurrentCommands unitid
+          IO.inspect nr_commands
+          if nr_commands == 0 do
+            options = unitDef_getBuildOptions unitdef
+            IO.inspect options
+
+            to_build = Enum.at options, :rand.uniform(length options) - 1
+            IO.inspect to_build
+            IO.inspect unitDef_getName to_build
+
+            pos = unit_getPos unitid
+            IO.inspect pos
+
+            to_build_pos = map_findClosestBuildSite to_build, pos, 1000.0, 10, 0
+            IO.inspect to_build_pos
+
+          end
+        end
+      end
+    )
+
+    :ok
+  end
+
   def build_something() do
     :io.format "[simple] building something~n"
     ai_pid = {:foo, :erlang_ai0@elk}
