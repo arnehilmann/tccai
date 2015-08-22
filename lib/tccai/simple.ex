@@ -1,6 +1,9 @@
 defmodule TccAI.Simple do
   def build_random() do
-    import TccAI.Callbacks, only: :functions
+    import SpringRTS.SkirmishAI.Callbacks, only: :functions
+    import SpringRTS.SkirmishAI.Commands, only: :functions
+
+    #    Process.register(TccAI.cnode(), :cnode)
 
     #units = getTeamUnits
     #IO.inspect units
@@ -33,6 +36,8 @@ defmodule TccAI.Simple do
             to_build_pos = map_findClosestBuildSite to_build, pos, 1000.0, 10, 0
             IO.inspect to_build_pos
 
+            result = unit_build unitdef, -1, 0, 99999999, to_build, pos, 0
+            IO.inspect result
           end
         end
       end
