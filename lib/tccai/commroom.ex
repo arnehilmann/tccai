@@ -2,23 +2,16 @@ defmodule TccAI.CommRoom do
   use GenServer
 
 
-  def start_link(opts \\ []) do
-    :gen_server.start_link({ :local, :commroom }, __MODULE__, [], opts)
-    #:gen_server.start_link(__MODULE__, :ok, [])
+  def start_link(_opts \\ []) do
+    {:ok, emitter} = GenEvent.start_link()
+    GenEvent.add_handler(emitter, TccAI.Emitter, [])
+    :gen_server.start_link({ :local, :commroom }, __MODULE__, %{:emitter=>emitter}, [])
   end
 
 
-  def init(state \\ []) do
+  def init(state) do
     :io.format "[commroom] starting...~n"
     { :ok, state }
-  end
-
-
-  defp handle_event(:unit_created, {unit_id, builder}) do
-    :io.format "[commroom] unit ~w created by ~w~n", [unit_id, builder]
-  end
-  defp handle_event(topic, data) do
-    :io.format "[commroom] ~w: ~w!~n", [topic, data]
   end
 
 
@@ -27,11 +20,11 @@ defmodule TccAI.CommRoom do
     { :noreply, state }
   end
   def handle_info({ :event, topic, data }, state) when is_atom(topic) do
-    handle_event(topic, data)
+    GenEvent.notify(state[:emitter], {topic, data})
     { :noreply, state }
   end
   def handle_info(:tick, state) do
-    # :io.format "[commroom] tick~n"
+    GenEvent.notify(state[:emitter], {:tick})
     { :noreply, state }
   end
   def handle_info({selector, data}, state) do

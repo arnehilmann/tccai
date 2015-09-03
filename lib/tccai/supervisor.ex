@@ -5,7 +5,7 @@ defmodule TccAI.Supervisor do
     :supervisor.start_link(__MODULE__, opts)
   end
 
-  def init(opts) do
+  def init(_opts) do
     children = [worker(TccAI.CommRoom, [])]
     supervise children, strategy: :one_for_one
   end
