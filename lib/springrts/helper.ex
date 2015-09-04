@@ -1,9 +1,10 @@
-defmodule SpringRTS.SkirmishAI.Helper do
+defmodule SpringRTS.Helper do
   @tmo 1000
 
   def receive_response() do
     receive do
       {:ok, response} -> response
+      {:ok} -> nil
       any_other ->
         IO.inspect any_other
         raise 'unknown response'

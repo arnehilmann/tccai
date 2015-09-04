@@ -1,22 +1,34 @@
 defmodule TccAI.CommRoom do
   use GenServer
+  require Logger
+
+  @name :commroom
+
+  def get_engine() do
+    GenServer.call @name, :engine
+  end
 
 
   def start_link(_opts \\ []) do
     {:ok, emitter} = GenEvent.start_link()
     GenEvent.add_handler(emitter, TccAI.Emitter, [])
-    :gen_server.start_link({ :local, :commroom }, __MODULE__, %{:emitter=>emitter}, [])
+    :gen_server.start_link({ :local, @name }, __MODULE__, %{:emitter=>emitter, :engine=>nil}, [])
   end
 
 
   def init(state) do
-    :io.format "[commroom] starting...~n"
+    Logger.info "[commroom] starting..."
     { :ok, state }
   end
 
 
+  def handle_call(:engine, _from, state) do
+    {:reply, {:ok, state[:engine]}, state}
+  end
+
+
   def handle_info({ :event, topic, data }, state) when is_integer(topic) do
-    :io.format "[commroom] incoming raw event: topic ~w, payload ~s~n", [topic, data]
+    Logger.info :io_lib.format "[commroom] incoming raw event: topic ~w, payload ~s", [topic, data]
     { :noreply, state }
   end
   def handle_info({ :event, topic, data }, state) when is_atom(topic) do
@@ -28,11 +40,11 @@ defmodule TccAI.CommRoom do
     { :noreply, state }
   end
   def handle_info({selector, data}, state) do
-    :io.format "[commroom] unknown response ~s: ~w~n", [selector, data]
+    Logger.warn :io_lib.format "[commroom] unknown response ~s: ~w", [selector, data]
     { :noreply, state }
   end
   def handle_info(others, state) do
-    :io.format "[commroom] unknown event ~s, ignoring~n", [others]
+    Logger.warn :io_lib.format "[commroom] unknown event ~s, ignoring", [others]
     { :noreply, state }
   end
 
