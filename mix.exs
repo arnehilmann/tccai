@@ -17,7 +17,7 @@ defmodule TccAI.Mixfile do
   def application do
     [applications: [:logger],
      registered: [:commroom],
-     mod: { TccAI, [ :ok2 ] }]
+     mod: { TccAI, [] }]
   end
 
   # Dependencies can be Hex packages:

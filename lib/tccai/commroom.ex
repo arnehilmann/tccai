@@ -4,26 +4,25 @@ defmodule TccAI.CommRoom do
 
   @name :commroom
 
-  def get_engine() do
-    GenServer.call @name, :engine
+  def state do
+    GenServer.call @name, :state
+  end
+
+  def engine_pid do
+    GenServer.call @name, :engine_pid
+  end
+
+  def register do
+    GenServer.call @name, :register
   end
 
 
-  def poll() do
-    receive do
-    after 1000 ->
-      send Application.get_env(SpringRTS, :engine), {:register, self()}
-    end
-    poll
-  end
-
-
-  def start_link(_opts \\ []) do
+  def start_link(opts) do
     {:ok, emitter} = GenEvent.start_link()
     GenEvent.add_handler(emitter, TccAI.Emitter, [])
-    #spawn_link poll
-    :gen_server.start_link({ :local, @name }, __MODULE__, %{:emitter=>emitter, :engine=>nil}, [])
-    #:gen_server.start_link({ :local, @name }, __MODULE__, [], [])
+    opts = Map.put opts, :emitter, emitter
+    opts = Map.put opts, :engine_pid, nil
+    :gen_server.start_link({ :local, @name }, __MODULE__, opts, [])
   end
 
 
@@ -33,8 +32,24 @@ defmodule TccAI.CommRoom do
   end
 
 
-  def handle_call(:engine, _from, state) do
-    {:reply, {:ok, state[:engine]}, state}
+  def handle_call(:register, _from, state) do
+    send state.engine, {:register, self()}
+    receive do
+      {:ok, pid} ->
+        Logger.info "[commroom] registered for events from #{inspect pid}"
+        {:reply, :ok, %{state | :engine_pid => pid}}
+    after 1000 ->
+        Logger.info "[commroom] deregistered from engine due to timeout"
+      {:reply, :timeout, %{state | :engine_pid => nil}}
+    end
+  end
+
+  def handle_call(:engine_pid, _from, state) do
+    {:reply, {:ok, state.engine_pid}, state}
+  end
+
+  def handle_call(:state, _from, state) do
+    {:reply, {:ok, state}, state}
   end
 
 
