@@ -7,9 +7,9 @@ defmodule SpringRTS.Helper do
       {:ok} -> nil
       any_other ->
         IO.inspect any_other
-        raise 'unknown response'
+        raise "unknown response"
     after
-        @tmo -> raise 'timeout'
+        @tmo -> raise "timeout"
     end
   end
 end

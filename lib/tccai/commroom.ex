@@ -9,10 +9,21 @@ defmodule TccAI.CommRoom do
   end
 
 
+  def poll() do
+    receive do
+    after 1000 ->
+      send Application.get_env(SpringRTS, :engine), {:register, self()}
+    end
+    poll
+  end
+
+
   def start_link(_opts \\ []) do
     {:ok, emitter} = GenEvent.start_link()
     GenEvent.add_handler(emitter, TccAI.Emitter, [])
+    #spawn_link poll
     :gen_server.start_link({ :local, @name }, __MODULE__, %{:emitter=>emitter, :engine=>nil}, [])
+    #:gen_server.start_link({ :local, @name }, __MODULE__, [], [])
   end
 
 
