@@ -63,14 +63,14 @@ defmodule TccAI.Simple do
   end
 
   def units do
-    Enum.reduce getTeamUnits, %{}, fn id, tmp ->
+    Enum.map getTeamUnits, fn id ->
       unitdef_id = unit_getDef(id)
-      Map.put(tmp, to_string(id), %{
+      %{
         :id => to_string(id),
         :def_id => to_string(unitdef_id),
         :name => to_string(unitDef_getName(unitdef_id)),
         #:pos => unit_getPos(id)
-      })
+      }
     end
   end
 

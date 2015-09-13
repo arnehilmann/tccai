@@ -1,0 +1,14 @@
+<ul id="units"></ul>
+
+<script src="js/d3.js" charset="utf-8"></script>
+<script>
+    "use strict";
+    d3.json("/units", units => {
+        console.log(units);
+        var items = d3.select("#units").selectAll("li").data(units);
+        console.log(items.enter());
+        items.enter()
+            .append("li")
+            .text(d => d.id + " " + d.name);
+    });
+</script>
