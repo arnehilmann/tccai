@@ -1,9 +1,7 @@
 defmodule TccAI.Simple do
   import SpringRTS.Callbacks, only: :functions
-  import Logger
 
   def build_random do
-    import SpringRTS.Callbacks, only: :functions
     import SpringRTS.Commands, only: :functions
 
     teamunits = getTeamUnits
@@ -65,7 +63,6 @@ defmodule TccAI.Simple do
   end
 
   def units do
-    import SpringRTS.Callbacks, only: :functions
     Enum.reduce getTeamUnits, %{}, fn id, tmp ->
       unitdef_id = unit_getDef(id)
       Map.put(tmp, to_string(id), %{
