@@ -42,16 +42,7 @@ defmodule TccAI.Simple do
   end
 
   def economy_overview do
-    import Logger
-
-    #resources = valid_resource_ids
-    #|> Enum.map(fn id -> {
-      #id,
-      #resource_getName(id),
-      #economy_getCurrent(id)
-      #} end)
-
-    resources = Enum.reduce valid_resource_ids, %{}, fn id, tmp_map ->
+    Enum.reduce valid_resource_ids, %{}, fn id, tmp_map ->
       name = to_string(resource_getName(id))
       Map.put(tmp_map, name, %{
         :id => to_string(id),
@@ -70,6 +61,19 @@ defmodule TccAI.Simple do
       [id | valid_resource_ids(id + 1)]
     else
       []
+    end
+  end
+
+  def units do
+    import SpringRTS.Callbacks, only: :functions
+    Enum.reduce getTeamUnits, %{}, fn id, tmp ->
+      unitdef_id = unit_getDef(id)
+      Map.put(tmp, to_string(id), %{
+        :id => to_string(id),
+        :def_id => to_string(unitdef_id),
+        :name => to_string(unitDef_getName(unitdef_id)),
+        #:pos => unit_getPos(id)
+      })
     end
   end
 

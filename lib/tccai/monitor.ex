@@ -1,6 +1,19 @@
+defmodule TccAI.StaticServer do
+  use Plug.Builder
+
+  #plug Plug.Static, at: "/", from: "/home/arne/dev/tccai/"
+  plug Plug.Static, at: "/", from: :tccai
+  plug :not_found
+
+  def not_found(conn, _) do
+    send_resp(conn, 404, "not found")
+  end
+end
+
 defmodule TccAI.Monitor do
   use Plug.Router
 
+  plug Plug.Logger
   plug :match
   plug :dispatch
 
@@ -11,14 +24,17 @@ defmodule TccAI.Monitor do
   end
 
   get "/economy" do
-    alias TccAI.Simple
     conn
     |> put_resp_content_type("text/plain")
-    #|> send_resp(200, inspect(Simple.economy_overview))
-    |> send_resp(200, Poison.Encoder.encode(Simple.economy_overview, []))
+    |> send_resp(200, Poison.Encoder.encode(TccAI.Simple.economy_overview, []))
   end
 
-  match _ do
-    send_resp(conn, 404, "oops")
+  get "/units" do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, Poison.Encoder.encode(TccAI.Simple.units, []))
   end
+
+  forward "/", to: TccAI.StaticServer
 end
+
