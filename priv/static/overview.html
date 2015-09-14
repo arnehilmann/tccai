@@ -1,0 +1,48 @@
+<table id="resources"></table>
+
+<ul id="units"></ul>
+
+
+
+
+<script src="js/d3.js" charset="utf-8"></script>
+
+<script>
+    "use strict";
+
+    // taken from http://stackoverflow.com/questions/11582512/how-to-get-url-parameters-with-javascript/11582513#11582513
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+
+    var load_units = () =>
+        d3.json("/units", units => {
+            console.log(units);
+            var items = d3.select("#units").selectAll("li").data(units, unit => unit.id);
+            items.enter()
+                .append("li")
+                .text(d => d.id + " " + d.name);
+        });
+
+    var load_economy = () =>
+        d3.json("/resources", resources => {
+            console.log(resources);
+            var items = d3.select("#resources").selectAll("tr").data(resources, resource => resource.id);
+            var new_item = items.enter()
+                .append("tr");
+            new_item.append("td").text(d => d.name);
+            new_item.append("td").text(d => `${d.current} / ${d.storage}`);
+            new_item.append("td").text(d => `+ ${d.income} - ${d.usage} (-${d.excess})`);
+        });
+
+    var reload = () => {
+        load_units();
+        load_economy();
+        var delay_in_seconds = parseInt(getURLParameter("delay"));
+        if (delay_in_seconds) {
+            setTimeout(reload, delay_in_seconds * 1000);
+        }
+    };
+
+    reload();
+</script>

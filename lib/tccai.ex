@@ -15,7 +15,7 @@ defmodule TccAI do
     :erlang.set_cookie node(), cookie
     Application.put_env(SpringRTS, :engine, enginename)
 
-    {:ok, _pid} = Plug.Adapters.Cowboy.http TccAI.Monitor, []
+    {:ok, _pid} = Plug.Adapters.Cowboy.http TccAI.Web, []
 
     TccAI.Supervisor.start_link(%{:team_id=>team_id, :engine=>enginename})
   end
