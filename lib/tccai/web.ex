@@ -12,7 +12,7 @@ end
 defmodule TccAI.Web do
   use Plug.Router
 
-  #plug Plug.Logger
+  plug Plug.Logger
   plug :match
   plug :dispatch
 
@@ -31,7 +31,7 @@ defmodule TccAI.Web do
   get "/units" do
     conn
     |> put_resp_content_type("text/plain")
-    |> send_resp(200, Poison.Encoder.encode(TccAI.Simple.units, []))
+    |> send_resp(200, Poison.Encoder.encode(TccAI.Units.overview, []))
   end
 
   forward "/", to: TccAI.StaticContent

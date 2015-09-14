@@ -38,40 +38,4 @@ defmodule TccAI.Simple do
 
     :ok
   end
-
-  def economy_overview do
-    Enum.reduce valid_resource_ids, %{}, fn id, tmp_map ->
-      name = to_string(resource_getName(id))
-      Map.put(tmp_map, name, %{
-        :id => to_string(id),
-        :current => economy_getCurrent(id),
-        :storage => economy_getStorage(id),
-        :name => name,
-        :income => economy_getIncome(id),
-        :usage => economy_getUsage(id),
-        :excess => economy_getExcess(id)
-      })
-    end
-  end
-
-  defp valid_resource_ids(id \\ 0) do
-    if economy_getCurrent(id) >= 0 do
-      [id | valid_resource_ids(id + 1)]
-    else
-      []
-    end
-  end
-
-  def units do
-    Enum.map getTeamUnits, fn id ->
-      unitdef_id = unit_getDef(id)
-      %{
-        :id => to_string(id),
-        :def_id => to_string(unitdef_id),
-        :name => to_string(unitDef_getName(unitdef_id)),
-        #:pos => unit_getPos(id)
-      }
-    end
-  end
-
 end

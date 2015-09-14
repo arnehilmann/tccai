@@ -1,6 +1,6 @@
 <table id="resources"></table>
 
-<ul id="units"></ul>
+<table id="units"></table>
 
 
 
@@ -18,18 +18,20 @@
     var load_units = () =>
         d3.json("/units", units => {
             console.log(units);
-            var items = d3.select("#units").selectAll("li").data(units, unit => unit.id);
-            items.enter()
-                .append("li")
-                .text(d => d.id + " " + d.name);
+            var items = d3.select("#units").selectAll("tr").data(units, unit => unit.id);
+            var new_item = items.enter().append("tr");
+            new_item.append("td").text(d => d.id);
+            new_item.append("td").text(d => d.name);
+            new_item.append("td").text(d => d.health);
+            new_item.append("td").text(d => d.max_health);
+            new_item.append("td").text(d => d.isBuingBuilt ? "[building]" : "");
         });
 
     var load_economy = () =>
         d3.json("/resources", resources => {
             console.log(resources);
             var items = d3.select("#resources").selectAll("tr").data(resources, resource => resource.id);
-            var new_item = items.enter()
-                .append("tr");
+            var new_item = items.enter().append("tr");
             new_item.append("td").text(d => d.name);
             new_item.append("td").text(d => `${d.current} / ${d.storage}`);
             new_item.append("td").text(d => `+ ${d.income} - ${d.usage} (-${d.excess})`);
