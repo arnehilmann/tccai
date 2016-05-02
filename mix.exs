@@ -4,7 +4,7 @@ defmodule TccAI.Mixfile do
   def project do
     [app: :tccai,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "> 1.0.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      escript: [main_module: TccAI.Cli],
@@ -30,8 +30,8 @@ defmodule TccAI.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:cowboy, "~> 1.0.0"},
-     {:plug, "~> 1.0"},
-     {:poison, "~> 1.5"}]
+    [{:cowboy, "> 0.0.0"},
+     {:plug, "> 0.0.0"},
+     {:poison, "> 0.0.0"}]
   end
 end
