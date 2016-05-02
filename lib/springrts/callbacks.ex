@@ -144,6 +144,10 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Engine_Version_isRelease, self()}
         receive_response
     end
+    def engine_executeCommand(unitId, groupId, commandData) do
+        send engine(), {:callback, :Engine_executeCommand, unitId, groupId, commandData, self()}
+        receive_response
+    end
     def engine_handleCommand(toId, commandId, commandTopic, commandData) do
         send engine(), {:callback, :Engine_handleCommand, toId, commandId, commandTopic, commandData, self()}
         receive_response
@@ -512,6 +516,10 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_findClosestBuildSite, unitDefId, pos_posF3, searchRadius, minDist, facing, self()}
         receive_response
     end
+    def map_getAirLosMap(airLosValues, airLosValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getAirLosMap, airLosValues, airLosValues_sizeMax, self()}
+        receive_response
+    end
     def map_getChecksum() do
         send engine(), {:callback, :Map_getChecksum, self()}
         receive_response
@@ -534,6 +542,14 @@ defmodule SpringRTS.Callbacks do
     end
     def map_getGravity() do
         send engine(), {:callback, :Map_getGravity, self()}
+        receive_response
+    end
+    def map_getHardness() do
+        send engine(), {:callback, :Map_getHardness, self()}
+        receive_response
+    end
+    def map_getHardnessModMap(hardMods, hardMods_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getHardnessModMap, hardMods, hardMods_sizeMax, self()}
         receive_response
     end
     def map_getHash() do
@@ -616,8 +632,24 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getResourceMapSpotsPositions, resourceId, spots_AposF3, spots_AposF3_sizeMax, self()}
         receive_response
     end
+    def map_getSeismicMap(seismicValues, seismicValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSeismicMap, seismicValues, seismicValues_sizeMax, self()}
+        receive_response
+    end
     def map_getSlopeMap(slopes, slopes_sizeMax \\ 100) do
         send engine(), {:callback, :Map_getSlopeMap, slopes, slopes_sizeMax, self()}
+        receive_response
+    end
+    def map_getSonarJammerMap(sonarJammerValues, sonarJammerValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSonarJammerMap, sonarJammerValues, sonarJammerValues_sizeMax, self()}
+        receive_response
+    end
+    def map_getSonarMap(sonarValues, sonarValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSonarMap, sonarValues, sonarValues_sizeMax, self()}
+        receive_response
+    end
+    def map_getSpeedModMap(speedModClass, speedMods, speedMods_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSpeedModMap, speedModClass, speedMods, speedMods_sizeMax, self()}
         receive_response
     end
     def map_getStartPos() do
@@ -636,16 +668,16 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getWidth, self()}
         receive_response
     end
+    def map_isDeformable() do
+        send engine(), {:callback, :Map_isDeformable, self()}
+        receive_response
+    end
     def map_isPosInCamera(pos_posF3, radius) do
         send engine(), {:callback, :Map_isPosInCamera, pos_posF3, radius, self()}
         receive_response
     end
     def map_isPossibleToBuildAt(unitDefId, pos_posF3, facing) do
         send engine(), {:callback, :Map_isPossibleToBuildAt, unitDefId, pos_posF3, facing, self()}
-        receive_response
-    end
-    def mod_getAirLosMul() do
-        send engine(), {:callback, :Mod_getAirLosMul, self()}
         receive_response
     end
     def mod_getAirMipLevel() do
@@ -702,10 +734,6 @@ defmodule SpringRTS.Callbacks do
     end
     def mod_getLosMipLevel() do
         send engine(), {:callback, :Mod_getLosMipLevel, self()}
-        receive_response
-    end
-    def mod_getLosMul() do
-        send engine(), {:callback, :Mod_getLosMul, self()}
         receive_response
     end
     def mod_getMultiReclaim() do
@@ -962,10 +990,6 @@ defmodule SpringRTS.Callbacks do
     end
     def unitDef_WeaponMount_getBadTargetCategory(unitDefId, weaponMountId) do
         send engine(), {:callback, :UnitDef_WeaponMount_getBadTargetCategory, unitDefId, weaponMountId, self()}
-        receive_response
-    end
-    def unitDef_WeaponMount_getFuelUsage(unitDefId, weaponMountId) do
-        send engine(), {:callback, :UnitDef_WeaponMount_getFuelUsage, unitDefId, weaponMountId, self()}
         receive_response
     end
     def unitDef_WeaponMount_getMainDir(unitDefId, weaponMountId) do
@@ -1228,10 +1252,6 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :UnitDef_getMaxElevator, unitDefId, self()}
         receive_response
     end
-    def unitDef_getMaxFuel(unitDefId) do
-        send engine(), {:callback, :UnitDef_getMaxFuel, unitDefId, self()}
-        receive_response
-    end
     def unitDef_getMaxHeightDif(unitDefId) do
         send engine(), {:callback, :UnitDef_getMaxHeightDif, unitDefId, self()}
         receive_response
@@ -1262,10 +1282,6 @@ defmodule SpringRTS.Callbacks do
     end
     def unitDef_getMaxWeaponRange(unitDefId) do
         send engine(), {:callback, :UnitDef_getMaxWeaponRange, unitDefId, self()}
-        receive_response
-    end
-    def unitDef_getMinAirBasePower(unitDefId) do
-        send engine(), {:callback, :UnitDef_getMinAirBasePower, unitDefId, self()}
         receive_response
     end
     def unitDef_getMinCollisionSpeed(unitDefId) do
@@ -1314,10 +1330,6 @@ defmodule SpringRTS.Callbacks do
     end
     def unitDef_getReclaimSpeed(unitDefId) do
         send engine(), {:callback, :UnitDef_getReclaimSpeed, unitDefId, self()}
-        receive_response
-    end
-    def unitDef_getRefuelTime(unitDefId) do
-        send engine(), {:callback, :UnitDef_getRefuelTime, unitDefId, self()}
         receive_response
     end
     def unitDef_getRepairSpeed(unitDefId) do
@@ -1840,6 +1852,14 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Unit_Weapon_getReloadTime, unitId, weaponId, self()}
         receive_response
     end
+    def unit_Weapon_getShieldPower(unitId, weaponId) do
+        send engine(), {:callback, :Unit_Weapon_getShieldPower, unitId, weaponId, self()}
+        receive_response
+    end
+    def unit_Weapon_isShieldEnabled(unitId, weaponId) do
+        send engine(), {:callback, :Unit_Weapon_isShieldEnabled, unitId, weaponId, self()}
+        receive_response
+    end
     def unit_getAiHint(unitId) do
         send engine(), {:callback, :Unit_getAiHint, unitId, self()}
         receive_response
@@ -1854,10 +1874,6 @@ defmodule SpringRTS.Callbacks do
     end
     def unit_getCurrentCommands(unitId) do
         send engine(), {:callback, :Unit_getCurrentCommands, unitId, self()}
-        receive_response
-    end
-    def unit_getCurrentFuel(unitId) do
-        send engine(), {:callback, :Unit_getCurrentFuel, unitId, self()}
         receive_response
     end
     def unit_getDef(unitId) do
