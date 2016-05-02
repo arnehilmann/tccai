@@ -1,0 +1,7 @@
+ git clone https://github.com/arnehilmann/tccai.git
+ cd tccai
+ mix hex.info
+ mix local.rebar
+ mix deps.get --all
+ mix compile
+ misc/run-hq0
