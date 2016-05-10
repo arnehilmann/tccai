@@ -36,10 +36,11 @@ defmodule TccAI.CommRoom do
   def try_initial_connect() do
     register
     receive do
-    after 10_000 ->
-      :ok
+      :timeout ->
+        try_initial_connect
+      :ok ->
+        :ok
     end
-    try_initial_connect
   end
 
   def handle_call(:register, _from, state) do
@@ -49,7 +50,7 @@ defmodule TccAI.CommRoom do
         Logger.info "[commroom] registered for events from #{inspect pid}"
         {:reply, :ok, %{state | :engine_pid => pid}}
     after 1000 ->
-      Logger.info "[commroom] deregistered from engine due to timeout"
+      # Logger.info "[commroom] deregistered from engine due to timeout"
       {:reply, :timeout, %{state | :engine_pid => nil}}
     end
   end
