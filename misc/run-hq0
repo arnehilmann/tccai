@@ -1,1 +1,3 @@
-iex --sname hq0 --cookie erlang_ai0 -S mix
+mix hex.info
+
+iex --name hq0@hq0.spring --cookie erlang_ai0 -S mix
