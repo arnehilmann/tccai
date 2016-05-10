@@ -416,8 +416,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Group_OrderPreview_getOptions, groupId, self()}
         receive_response
     end
-    def group_OrderPreview_getParams(groupId, params, params_sizeMax \\ 100) do
-        send engine(), {:callback, :Group_OrderPreview_getParams, groupId, params, params_sizeMax, self()}
+    def group_OrderPreview_getParams(groupId, params_sizeMax \\ 100) do
+        send engine(), {:callback, :Group_OrderPreview_getParams, groupId, params_sizeMax, self()}
         receive_response
     end
     def group_OrderPreview_getTag(groupId) do
@@ -436,8 +436,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Group_SupportedCommand_getName, groupId, supportedCommandId, self()}
         receive_response
     end
-    def group_SupportedCommand_getParams(groupId, supportedCommandId, params, params_sizeMax \\ 100) do
-        send engine(), {:callback, :Group_SupportedCommand_getParams, groupId, supportedCommandId, params, params_sizeMax, self()}
+    def group_SupportedCommand_getParams(groupId, supportedCommandId, params_sizeMax \\ 100) do
+        send engine(), {:callback, :Group_SupportedCommand_getParams, groupId, supportedCommandId, params_sizeMax, self()}
         receive_response
     end
     def group_SupportedCommand_getToolTip(groupId, supportedCommandId) do
@@ -516,16 +516,16 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_findClosestBuildSite, unitDefId, pos_posF3, searchRadius, minDist, facing, self()}
         receive_response
     end
-    def map_getAirLosMap(airLosValues, airLosValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getAirLosMap, airLosValues, airLosValues_sizeMax, self()}
+    def map_getAirLosMap(airLosValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getAirLosMap, airLosValues_sizeMax, self()}
         receive_response
     end
     def map_getChecksum() do
         send engine(), {:callback, :Map_getChecksum, self()}
         receive_response
     end
-    def map_getCornersHeightMap(cornerHeights, cornerHeights_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getCornersHeightMap, cornerHeights, cornerHeights_sizeMax, self()}
+    def map_getCornersHeightMap(cornerHeights_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getCornersHeightMap, cornerHeights_sizeMax, self()}
         receive_response
     end
     def map_getCurWind() do
@@ -548,8 +548,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getHardness, self()}
         receive_response
     end
-    def map_getHardnessModMap(hardMods, hardMods_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getHardnessModMap, hardMods, hardMods_sizeMax, self()}
+    def map_getHardnessModMap(hardMods_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getHardnessModMap, hardMods_sizeMax, self()}
         receive_response
     end
     def map_getHash() do
@@ -560,24 +560,24 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getHeight, self()}
         receive_response
     end
-    def map_getHeightMap(heights, heights_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getHeightMap, heights, heights_sizeMax, self()}
+    def map_getHeightMap(heights_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getHeightMap, heights_sizeMax, self()}
         receive_response
     end
     def map_getHumanName() do
         send engine(), {:callback, :Map_getHumanName, self()}
         receive_response
     end
-    def map_getJammerMap(jammerValues, jammerValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getJammerMap, jammerValues, jammerValues_sizeMax, self()}
+    def map_getJammerMap(jammerValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getJammerMap, jammerValues_sizeMax, self()}
         receive_response
     end
     def map_getLines(includeAllies) do
         send engine(), {:callback, :Map_getLines, includeAllies, self()}
         receive_response
     end
-    def map_getLosMap(losValues, losValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getLosMap, losValues, losValues_sizeMax, self()}
+    def map_getLosMap(losValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getLosMap, losValues_sizeMax, self()}
         receive_response
     end
     def map_getMaxHeight() do
@@ -612,12 +612,12 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getPoints, includeAllies, self()}
         receive_response
     end
-    def map_getRadarMap(radarValues, radarValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getRadarMap, radarValues, radarValues_sizeMax, self()}
+    def map_getRadarMap(radarValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getRadarMap, radarValues_sizeMax, self()}
         receive_response
     end
-    def map_getResourceMapRaw(resourceId, resources, resources_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getResourceMapRaw, resourceId, resources, resources_sizeMax, self()}
+    def map_getResourceMapRaw(resourceId, resources_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getResourceMapRaw, resourceId, resources_sizeMax, self()}
         receive_response
     end
     def map_getResourceMapSpotsAverageIncome(resourceId) do
@@ -628,28 +628,28 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Map_getResourceMapSpotsNearest, resourceId, pos_posF3, self()}
         receive_response
     end
-    def map_getResourceMapSpotsPositions(resourceId, spots_AposF3, spots_AposF3_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getResourceMapSpotsPositions, resourceId, spots_AposF3, spots_AposF3_sizeMax, self()}
+    def map_getResourceMapSpotsPositions(resourceId, spots_AposF3_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getResourceMapSpotsPositions, resourceId, spots_AposF3_sizeMax, self()}
         receive_response
     end
-    def map_getSeismicMap(seismicValues, seismicValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getSeismicMap, seismicValues, seismicValues_sizeMax, self()}
+    def map_getSeismicMap(seismicValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSeismicMap, seismicValues_sizeMax, self()}
         receive_response
     end
-    def map_getSlopeMap(slopes, slopes_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getSlopeMap, slopes, slopes_sizeMax, self()}
+    def map_getSlopeMap(slopes_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSlopeMap, slopes_sizeMax, self()}
         receive_response
     end
-    def map_getSonarJammerMap(sonarJammerValues, sonarJammerValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getSonarJammerMap, sonarJammerValues, sonarJammerValues_sizeMax, self()}
+    def map_getSonarJammerMap(sonarJammerValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSonarJammerMap, sonarJammerValues_sizeMax, self()}
         receive_response
     end
-    def map_getSonarMap(sonarValues, sonarValues_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getSonarMap, sonarValues, sonarValues_sizeMax, self()}
+    def map_getSonarMap(sonarValues_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSonarMap, sonarValues_sizeMax, self()}
         receive_response
     end
-    def map_getSpeedModMap(speedModClass, speedMods, speedMods_sizeMax \\ 100) do
-        send engine(), {:callback, :Map_getSpeedModMap, speedModClass, speedMods, speedMods_sizeMax, self()}
+    def map_getSpeedModMap(speedModClass, speedMods_sizeMax \\ 100) do
+        send engine(), {:callback, :Map_getSpeedModMap, speedModClass, speedMods_sizeMax, self()}
         receive_response
     end
     def map_getStartPos() do
@@ -1516,8 +1516,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :UnitDef_getXSize, unitDefId, self()}
         receive_response
     end
-    def unitDef_getYardMap(unitDefId, facing, yardMap, yardMap_sizeMax \\ 100) do
-        send engine(), {:callback, :UnitDef_getYardMap, unitDefId, facing, yardMap, yardMap_sizeMax, self()}
+    def unitDef_getYardMap(unitDefId, facing, yardMap_sizeMax \\ 100) do
+        send engine(), {:callback, :UnitDef_getYardMap, unitDefId, facing, yardMap_sizeMax, self()}
         receive_response
     end
     def unitDef_getZSize(unitDefId) do
@@ -1784,8 +1784,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Unit_CurrentCommand_getOptions, unitId, commandId, self()}
         receive_response
     end
-    def unit_CurrentCommand_getParams(unitId, commandId, params, params_sizeMax \\ 100) do
-        send engine(), {:callback, :Unit_CurrentCommand_getParams, unitId, commandId, params, params_sizeMax, self()}
+    def unit_CurrentCommand_getParams(unitId, commandId, params_sizeMax \\ 100) do
+        send engine(), {:callback, :Unit_CurrentCommand_getParams, unitId, commandId, params_sizeMax, self()}
         receive_response
     end
     def unit_CurrentCommand_getTag(unitId, commandId) do
@@ -1808,8 +1808,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :Unit_SupportedCommand_getName, unitId, supportedCommandId, self()}
         receive_response
     end
-    def unit_SupportedCommand_getParams(unitId, supportedCommandId, params, params_sizeMax \\ 100) do
-        send engine(), {:callback, :Unit_SupportedCommand_getParams, unitId, supportedCommandId, params, params_sizeMax, self()}
+    def unit_SupportedCommand_getParams(unitId, supportedCommandId, params_sizeMax \\ 100) do
+        send engine(), {:callback, :Unit_SupportedCommand_getParams, unitId, supportedCommandId, params_sizeMax, self()}
         receive_response
     end
     def unit_SupportedCommand_getToolTip(unitId, supportedCommandId) do
@@ -2016,8 +2016,8 @@ defmodule SpringRTS.Callbacks do
         send engine(), {:callback, :WeaponDef_Damage_getParalyzeDamageTime, weaponDefId, self()}
         receive_response
     end
-    def weaponDef_Damage_getTypes(weaponDefId, types, types_sizeMax \\ 100) do
-        send engine(), {:callback, :WeaponDef_Damage_getTypes, weaponDefId, types, types_sizeMax, self()}
+    def weaponDef_Damage_getTypes(weaponDefId, types_sizeMax \\ 100) do
+        send engine(), {:callback, :WeaponDef_Damage_getTypes, weaponDefId, types_sizeMax, self()}
         receive_response
     end
     def weaponDef_Shield_getAlpha(weaponDefId) do
