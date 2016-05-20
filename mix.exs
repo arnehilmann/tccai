@@ -30,8 +30,12 @@ defmodule TccAI.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:cowboy, "> 0.0.0"},
+    [
+     {:cowboy, "> 0.0.0"},
      {:plug, "> 0.0.0"},
-     {:poison, "> 0.0.0"}]
+     {:poison, "> 0.0.0"},
+     # {:credo, "~> 0.3", only: [:dev, :test]},
+     {:dogma, "~> 0.1", only: :dev},
+    ]
   end
 end
