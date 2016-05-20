@@ -1,39 +1,26 @@
 defmodule TccAI.Resources do
-  import SpringRTS.Callbacks, only: :functions
+  alias SpringRTS.Callbacks.Economy
+  alias SpringRTS.Callbacks.Resource
+
+  @moduledoc "aggregate resource info"
 
   def current do
     Enum.map valid_resource_ids, fn id ->
-      name = to_string(resource_getName(id))
+      name = to_string(Resource.get_name(id))
       %{
         :id => to_string(id),
-        :current => economy_getCurrent(id),
-        :storage => economy_getStorage(id),
+        :current => Economy.get_current(id),
+        :storage => Economy.get_storage(id),
         :name => name,
-        :income => economy_getIncome(id),
-        :usage => economy_getUsage(id),
-        :excess => economy_getExcess(id)
+        :income => Economy.get_income(id),
+        :usage => Economy.get_usage(id),
+        :excess => Economy.get_excess(id)
       }
     end
   end
 
-  # overview as map
-  #def overview do
-  #  Enum.reduce valid_resource_ids, %{}, fn id, tmp_map ->
-  #    name = to_string(resource_getName(id))
-  #    Map.put(tmp_map, name, %{
-  #      :id => to_string(id),
-  #      :current => economy_getCurrent(id),
-  #      :storage => economy_getStorage(id),
-  #      :name => name,
-  #      :income => economy_getIncome(id),
-  #      :usage => economy_getUsage(id),
-  #      :excess => economy_getExcess(id)
-  #    })
-  #  end
-  #  end
-
   defp valid_resource_ids(id \\ 0) do
-    if economy_getCurrent(id) >= 0 do
+    if Economy.get_current(id) >= 0 do
       [id | valid_resource_ids(id + 1)]
     else
       []

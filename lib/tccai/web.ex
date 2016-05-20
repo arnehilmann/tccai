@@ -1,4 +1,5 @@
 defmodule TccAI.StaticContent do
+  @moduledoc "serve static content"
   use Plug.Builder
 
   plug Plug.Static, at: "/", from: :tccai
@@ -10,6 +11,7 @@ defmodule TccAI.StaticContent do
 end
 
 defmodule TccAI.Web do
+  @moduledoc "web service"
   use Plug.Router
 
   plug Plug.Logger
@@ -36,4 +38,3 @@ defmodule TccAI.Web do
 
   forward "/", to: TccAI.StaticContent
 end
-
