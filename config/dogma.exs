@@ -14,5 +14,6 @@ config :dogma,
 
   # Override an existing rule configuration
   override: [
-    %Rule.LineLength{ max_length: 120 },
+    %Rule.LineLength{ max_length: 180 },
+    %Rule.FunctionArity{ max: 8 },
   ]
