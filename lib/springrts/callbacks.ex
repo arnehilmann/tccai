@@ -1,7 +1,9 @@
 defmodule SpringRTS.Callbacks do
+    @moduledoc false
     import SpringRTS.Helper, only: :functions
 
     defmodule Cheats do
+        @moduledoc false
         def is_enabled do
             send Application.get_env(SpringRTS, :engine), {:callback, :Cheats_isEnabled, self()}
             receive_response
@@ -21,6 +23,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule DataDirs do
+        @moduledoc false
         def roots_allocate_path(relPath, writeable, create, dir) do
             send Application.get_env(SpringRTS, :engine), {:callback, :DataDirs_Roots_allocatePath, relPath, writeable, create, dir, self()}
             receive_response
@@ -60,6 +63,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Debug do
+        @moduledoc false
         def graph_drawer_is_enabled do
             send Application.get_env(SpringRTS, :engine), {:callback, :Debug_GraphDrawer_isEnabled, self()}
             receive_response
@@ -67,6 +71,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Economy do
+        @moduledoc false
         def get_current(resourceId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Economy_getCurrent, resourceId, self()}
             receive_response
@@ -106,6 +111,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Engine do
+        @moduledoc false
         def version_get_additional do
             send Application.get_env(SpringRTS, :engine), {:callback, :Engine_Version_getAdditional, self()}
             receive_response
@@ -165,6 +171,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule FeatureDef do
+        @moduledoc false
         def get_contained_resource(featureDefId, resourceId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :FeatureDef_getContainedResource, featureDefId, resourceId, self()}
             receive_response
@@ -260,6 +267,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Feature do
+        @moduledoc false
         def get_def(featureId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Feature_getDef, featureId, self()}
             receive_response
@@ -279,6 +287,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule File do
+        @moduledoc false
         def get_content(fileName, buffer, bufferLen) do
             send Application.get_env(SpringRTS, :engine), {:callback, :File_getContent, fileName, buffer, bufferLen, self()}
             receive_response
@@ -290,6 +299,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule GameRulesParam do
+        @moduledoc false
         def get_name(gameRulesParamId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :GameRulesParam_getName, gameRulesParamId, self()}
             receive_response
@@ -305,6 +315,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Game do
+        @moduledoc false
         def get_ai_interface_version do
             send Application.get_env(SpringRTS, :engine), {:callback, :Game_getAiInterfaceVersion, self()}
             receive_response
@@ -436,6 +447,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Group do
+        @moduledoc false
         def order_preview_get_id(groupId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Group_OrderPreview_getId, groupId, self()}
             receive_response
@@ -491,6 +503,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Gui do
+        @moduledoc false
         def camera_get_direction do
             send Application.get_env(SpringRTS, :engine), {:callback, :Gui_Camera_getDirection, self()}
             receive_response
@@ -514,6 +527,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Log do
+        @moduledoc false
         def exception(msg, severety, die) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Log_exception, msg, severety, die, self()}
             receive_response
@@ -525,6 +539,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Map do
+        @moduledoc false
         def line_get_color(lineId, return_colorS3_out) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Map_Line_getColor, lineId, return_colorS3_out, self()}
             receive_response
@@ -720,6 +735,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Mod do
+        @moduledoc false
         def get_air_mip_level do
             send Application.get_env(SpringRTS, :engine), {:callback, :Mod_getAirMipLevel, self()}
             receive_response
@@ -851,6 +867,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Resource do
+        @moduledoc false
         def get_name(resourceId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Resource_getName, resourceId, self()}
             receive_response
@@ -862,6 +879,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule SkirmishAI do
+        @moduledoc false
         def info_get_description(infoIndex) do
             send Application.get_env(SpringRTS, :engine), {:callback, :SkirmishAI_Info_getDescription, infoIndex, self()}
             receive_response
@@ -905,6 +923,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule SkirmishAIs do
+        @moduledoc false
         def get_max do
             send Application.get_env(SpringRTS, :engine), {:callback, :SkirmishAIs_getMax, self()}
             receive_response
@@ -916,6 +935,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Team do
+        @moduledoc false
         def team_rules_param_get_name(teamId, teamRulesParamId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Team_TeamRulesParam_getName, teamId, teamRulesParamId, self()}
             receive_response
@@ -947,6 +967,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Teams do
+        @moduledoc false
         def get_size do
             send Application.get_env(SpringRTS, :engine), {:callback, :Teams_getSize, self()}
             receive_response
@@ -954,6 +975,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule UnitDef do
+        @moduledoc false
         def flanking_bonus_get_dir(unitDefId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :UnitDef_FlankingBonus_getDir, unitDefId, self()}
             receive_response
@@ -1837,6 +1859,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule Unit do
+        @moduledoc false
         def current_command_get_id(unitId, commandId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :Unit_CurrentCommand_getId, unitId, commandId, self()}
             receive_response
@@ -2060,6 +2083,7 @@ defmodule SpringRTS.Callbacks do
     end
 
     defmodule WeaponDef do
+        @moduledoc false
         def damage_get_crater_boost(weaponDefId) do
             send Application.get_env(SpringRTS, :engine), {:callback, :WeaponDef_Damage_getCraterBoost, weaponDefId, self()}
             receive_response

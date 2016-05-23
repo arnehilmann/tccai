@@ -1,4 +1,5 @@
 defmodule SpringRTS.Commands do
+    @moduledoc false
     import SpringRTS.Helper, only: :functions
     defp engine do
         Application.get_env(SpringRTS, :engine)
@@ -136,7 +137,7 @@ defmodule SpringRTS.Commands do
         send engine(), {:command, :COMMAND_DRAWER_POINT_REMOVE, pos_posF3, self()}
         receive_response
     end
-    def group_create() do
+    def group_create do
         send engine(), {:command, :COMMAND_GROUP_CREATE, self()}
         receive_response
     end

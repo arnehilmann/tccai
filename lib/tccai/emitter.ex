@@ -1,4 +1,5 @@
 defmodule TccAI.Emitter do
+  @moduledoc false
   use GenEvent
 
   def handle_event({topic, data}, state) do

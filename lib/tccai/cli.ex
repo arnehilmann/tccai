@@ -1,4 +1,5 @@
 defmodule TccAI.Cli do
+  @moduledoc false
   def main(args) do
     number = List.first args
 
@@ -15,4 +16,3 @@ defmodule TccAI.Cli do
     :timer.sleep :infinity
   end
 end
-

@@ -1,4 +1,5 @@
 defmodule TccAI.CommRoom do
+  @moduledoc false
   use GenServer
   require Logger
 
@@ -33,7 +34,7 @@ defmodule TccAI.CommRoom do
   end
 
 
-  def try_initial_connect() do
+  def try_initial_connect do
     register
     receive do
       :timeout ->
