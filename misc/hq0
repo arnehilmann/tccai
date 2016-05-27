@@ -4,18 +4,18 @@ set -u -e -E
 HQ_NAME=$(basename $0)
 COMMAND=${1:-sh -c misc/run-$HQ_NAME}
 
+DOCKER_IMAGE=msaraiva/elixir-dev
+NET_NAME=spring
+
 PROJECT_DIR=$(dirname $(dirname $(readlink -f $0)))
 
-docker network inspect spring > /dev/null 2>&1 || docker network create --driver bridge spring
+docker network inspect $NET_NAME > /dev/null 2>&1 || docker network create --driver bridge $NET_NAME
 
 docker run -it \
 	-v $PROJECT_DIR:/ai \
 	-w /ai \
 	-p 24369:4369 \
 	--net-alias $HQ_NAME \
-	--net spring \
-        -e https_proxy=http://proxy.inf.epost-dev.de:8080 \
-	trenpixster/elixir \
+	--net $NET_NAME \
+	$DOCKER_IMAGE \
 	$COMMAND
-
-#	sh -c misc/run-$HQ_NAME
