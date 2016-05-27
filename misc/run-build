@@ -1,0 +1,6 @@
+mix hex.info
+#mix local.rebar
+mix deps.get --all
+mix deps.update --all
+mix compile
+mix dogma

@@ -1,0 +1,4 @@
+#!/bin/bash
+set -u -e -E
+
+$(dirname $0)/run builder sh -c misc/run-build

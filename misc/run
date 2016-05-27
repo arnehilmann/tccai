@@ -1,0 +1,26 @@
+#!/bin/bash
+set -u -e -E
+
+HOST_NAME=${1:?no HOST_NAME given?!}
+shift
+COMMAND=$*
+echo "command to run: $COMMAND"
+
+DOCKER_IMAGE=msaraiva/elixir-dev
+NET_NAME=spring
+
+PROJECT_DIR=$(dirname $(dirname $(readlink -f $0)))
+
+echo "checking network $NET_NAME"
+docker network inspect $NET_NAME > /dev/null 2>&1 || docker network create --driver bridge $NET_NAME
+
+echo "starting container $HOST_NAME"
+docker run -it --rm \
+	-v $PROJECT_DIR:/ai \
+	-w /ai \
+	--net-alias $HOST_NAME \
+	--net $NET_NAME \
+	$DOCKER_IMAGE \
+	$COMMAND
+
+	# -p 24369:4369 \
