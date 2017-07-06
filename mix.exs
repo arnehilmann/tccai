@@ -8,7 +8,7 @@ defmodule TccAI.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      escript: [main_module: TccAI.Cli],
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
@@ -29,7 +29,7 @@ defmodule TccAI.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type `mix help deps` for more examples and options
-  defp deps do
+  defp deps() do
     [
      {:cowboy, "> 0.0.0"},
      {:plug, "> 0.0.0"},
