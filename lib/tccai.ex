@@ -14,8 +14,8 @@ defmodule TccAI do
     cookie = String.to_atom "erlang_ai0"
     # enginenode = String.to_atom "erlang_ai#{team_id}@#{thishostname}"
     # enginename = {:foo, enginenode}
-    enginename = {:foo, String.to_atom "#{cookie}@engine.spring"}
-    # enginename = {:foo, String.to_atom "#{cookie}@8b13a4f211c2"}
+    # enginename = {:foo, String.to_atom "#{cookie}@engine.spring"}
+    enginename = {:foo, String.to_atom "#{cookie}@127.0.0.1"}
     IO.inspect cookie
     IO.inspect enginename
 

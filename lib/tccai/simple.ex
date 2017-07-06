@@ -8,8 +8,6 @@ defmodule TccAI.Simple do
   alias SpringRTS.Commands
 
   def shutdown do
-    import SpringRTS.Commands, only: :functions
-
     Enum.each Callbacks.get_team_units(),
       fn unitid ->
         IO.inspect unitid
@@ -35,7 +33,7 @@ defmodule TccAI.Simple do
           IO.inspect options
 
           if (length options) > 0 do
-            to_build = Enum.at options, :random.uniform(length options) - 1
+            to_build = Enum.at options, :rand.uniform(length options) - 1
             IO.inspect to_build
             IO.inspect UnitDef.get_name to_build
 

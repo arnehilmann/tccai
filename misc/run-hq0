@@ -1,3 +1,4 @@
 mix hex.info
 
-iex --name hq0@hq0.spring --cookie erlang_ai0 -S mix
+# iex --name hq0@hq0.spring --cookie erlang_ai0 -S mix
+iex --name hq0@127.0.0.1 --cookie erlang_ai0 -S mix
