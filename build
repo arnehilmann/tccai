@@ -2,8 +2,6 @@
 set -e -E -u
 
 export LC_ALL=C.UTF-8
-apt-get install elixir
-
 cp -r ../spring/AI/Skirmish/NullErlangAI/elixir_generated/* lib/
 mix local.hex --force
 mix  hex.info
