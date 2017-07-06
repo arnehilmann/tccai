@@ -5,7 +5,7 @@ defmodule TccAI.Resources do
   @moduledoc "aggregate resource info"
 
   def current do
-    Enum.map valid_resource_ids, fn id ->
+    Enum.map valid_resource_ids(), fn id ->
       name = to_string(Resource.get_name(id))
       %{
         :id => to_string(id),

@@ -29,16 +29,16 @@ defmodule TccAI.CommRoom do
 
   def init(state) do
     Logger.info "[commroom] starting..."
-    spawn_link fn -> try_initial_connect end
+    spawn_link fn -> try_initial_connect() end
     { :ok, state }
   end
 
 
   def try_initial_connect do
-    register
+    register()
     receive do
       :timeout ->
-        try_initial_connect
+        try_initial_connect()
       :ok ->
         :ok
     end
