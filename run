@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e -E -u
+
+cd $(dirname $0)
+
+iex --name hq0@127.0.0.1 --cookie erlang_ai0 -S mix
