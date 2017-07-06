@@ -4,7 +4,7 @@ defmodule TccAI.Units do
   @moduledoc "aggregate unit info"
 
   def overview do
-    Enum.map get_team_units, fn id ->
+    Enum.map get_team_units(), fn id ->
       unitdef_id = SpringRTS.Callbacks.Unit.get_def(id)
       %{
         :id => to_string(id),
