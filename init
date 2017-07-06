@@ -1,4 +1,12 @@
 #!/bin/bash
 set -e -E -u
 
+cd $(dirname $0)
+
 apt-get install elixir
+
+export LC_ALL=C.UTF-8
+mix local.hex --force
+mix  hex.info
+[[ -x ~/.mix/rebar ]] || mix local.rebar
+mix deps.get --all

@@ -3,10 +3,5 @@ set -e -E -u
 
 cd $(dirname $0)
 
-export LC_ALL=C.UTF-8
 cp -r ../spring/AI/Skirmish/NullErlangAI/elixir_generated/* lib/
-mix local.hex --force
-mix  hex.info
-mix local.rebar
-mix deps.get --all
 mix compile
