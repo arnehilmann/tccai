@@ -1,11 +1,17 @@
 #!/bin/bash
 set -e -E -u
 
+TARGET_LOCALE=C.UTF-8
+if [[ -z ${LC_ALL:-} ]]; then
+    echo "setting LC_ALL!"
+    echo "export LC_ALL=$TARGET_LOCALE" >> ~/.bashrc
+    export LC_ALL=$TARGET_LOCALE
+fi
+
 cd $(dirname $0)
 
 apt-get install elixir
 
-export LC_ALL=C.UTF-8
 mix local.hex --force
 mix  hex.info
 [[ -x ~/.mix/rebar ]] || mix local.rebar
