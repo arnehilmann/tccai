@@ -19,7 +19,7 @@ defmodule TccAI.Resources do
     end
   end
 
-  defp valid_resource_ids(id \\ 0) do
+  def valid_resource_ids(id \\ 0) do
     if Economy.get_current(id) >= 0 do
       [id | valid_resource_ids(id + 1)]
     else
