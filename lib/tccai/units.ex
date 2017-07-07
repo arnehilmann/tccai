@@ -15,10 +15,10 @@ defmodule TccAI.Units do
         :human_name => to_string(UnitDef.get_human_name(unitdef_id)),
         :health => Unit.get_health(id),
         :max_health => Unit.get_max_health(id),
-        :is_being_built => Unit.is_being_built(id),
-        :pos => Unit.get_pos(id),
-        :category => UnitDef.get_category_string(unitdef_id),
-        :is_builder => UnitDef.is_builder(unitdef_id),
+        :is_being_built => to_string(Unit.is_being_built(id)),
+        # :pos => to_string(Unit.get_pos(id)),
+        :category => to_string(UnitDef.get_category_string(unitdef_id)),
+        :is_builder => to_string(UnitDef.is_builder(unitdef_id)),
       }
     end
   end
