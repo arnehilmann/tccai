@@ -3,7 +3,7 @@ defmodule TccAI.StaticContent do
   use Plug.Builder
 
   plug Plug.Static, at: "/", from: :tccai
-  plug :not_found
+  # plug :not_found
 
   def not_found(conn, _) do
     send_resp(conn, 404, "not found")
@@ -14,7 +14,7 @@ defmodule TccAI.Web do
   @moduledoc "web service"
   use Plug.Router
 
-  plug Plug.Logger
+  plug Plug.Logger, log: :debug
   plug :match
   plug :dispatch
 
