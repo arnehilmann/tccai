@@ -4,7 +4,7 @@ defmodule TccAI do
   require Logger
 
   def start(_type, _opts) do
-    team_id = System.get_env("AI_NR") || 0
+    team_id = System.get_env("AI_NR") || "0"
     engine_hostname = System.get_env("ENGINE_HOSTNAME") || "127.0.0.1"
 
     thisname = String.to_atom "hq#{team_id}"
