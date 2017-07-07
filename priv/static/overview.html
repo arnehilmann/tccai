@@ -1,76 +1,98 @@
-<table id="resources"><thead/><tbody/></table>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-hsv.v0.1.min.js"></script>
+        <script src="https://d3js.org/d3-contour.v1.min.js"></script>
+    </head>
+    <body>
+        <table id="resources"><thead/><tbody/></table>
 
-<table id="units"><thead/><tbody/></table>
+        <table id="units"><thead/><tbody/></table>
+
+        <svg width="640" height="640" stroke="#fff" stroke-width="0.5"></svg>
+
+        <script>
+            "use strict";
+
+            var svg = d3.select("svg"),
+                width = +svg.attr("width"),
+                height = +svg.attr("height");
+
+            var i0 = d3.interpolateHsvLong(d3.hsv(120, 1, 0.65), d3.hsv(60, 1, 0.90)),
+                i1 = d3.interpolateHsvLong(d3.hsv(60, 1, 0.90), d3.hsv(0, 0, 0.95)),
+                interpolateTerrain = function(t) { return t < 0.5 ? i0(t * 2) : i1((t - 0.5) * 2); },
+                color = d3.scaleSequential(interpolateTerrain).domain([-110, 30]);
+
+            d3.json("/map", function(error, volcano) {
+            if (error) throw error;
+
+            svg.selectAll("path")
+                .data(d3.contours()
+                    .size([volcano.width, volcano.height])
+                    .thresholds(d3.range(-110, 30, 5))
+                (volcano.values))
+                .enter().append("path")
+                .attr("d", d3.geoPath(d3.geoIdentity().scale(width / volcano.width)))
+                .attr("fill", function(d) { return color(d.value); });
+            });
 
 
+            // taken from http://stackoverflow.com/questions/11582512/how-to-get-url-parameters-with-javascript/11582513#11582513
+            function getURLParameter(name) {
+                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+            }
 
+            var load_units = () =>
+                d3.json("/units", units => {
+                    var table = d3.select("#units");
 
-<script src="js/d3.js" charset="utf-8"></script>
+                    var thead = table.select("thead");
+                    thead.selectAll("tr").data([1]).enter().append('tr')
+                        .selectAll('th')
+                        .data(["unit id", "name", "human name", "health", "max health"]).enter()
+                        .append('th')
+                        .text(d => d);
 
-<script>
-    "use strict";
+                    var tbody = table.select("tbody").selectAll("tr").data(units, unit => unit.id);
+                    var values = tbody.enter().append("tr").merge(tbody).selectAll("td")
+                        .data(unit => [unit.id, unit.name, unit.human_name, unit.health.toFixed(0), unit.max_health.toFixed(0)]);
+                    values.enter().append("td").merge(values).text(d => d);
 
-    // taken from http://stackoverflow.com/questions/11582512/how-to-get-url-parameters-with-javascript/11582513#11582513
-    function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
-    }
+                    values.exit().remove();
+                    tbody.exit().remove();
+                });
 
-    var load_units = () =>
-        d3.json("/units", units => {
-            //console.log(units);
-            var table = d3.select("#units");
+            var load_economy = () =>
+                d3.json("/resources", resources => {
+                    var table = d3.select("#resources");
 
-            var thead = table.select("thead");
-            thead.selectAll("tr").data([1]).enter().append('tr')
-                .selectAll('th')
-                .data(["unit id", "name", "human name", "health", "max health"]).enter()
-                .append('th')
-                .text(d => d);
+                    var thead = table.select("thead");
+                    thead.selectAll("tr").data([1]).enter().append('tr')
+                        .selectAll('th')
+                        .data(["resource", "current", "max", "+", "-", "(+)"]).enter()
+                        .append('th')
+                        .text(d => d);
 
-            var tbody = table.select("tbody").selectAll("tr").data(units, unit => unit.id);
-            tbody.enter().append("tr");
+                    var tbody = table.select("tbody").selectAll("tr").data(resources, resource => resource.id);
+                    var values = tbody.enter().append("tr").merge(tbody).selectAll("td")
+                        .data(r => [r.name, r.current.toFixed(0), r.storage.toFixed(0), r.income.toFixed(0), r.usage.toFixed(0), r.excess.toFixed(0)]);
+                    values.enter().append("td").merge(values).text(d => d);
+                    values.exit().remove();
+                    tbody.exit().remove();
+                });
 
-            var values = tbody.selectAll("td")
-                .data(unit => [unit.id, unit.name, unit.human_name, unit.health.toFixed(0), unit.max_health.toFixed(0)]);
-            values.enter().append("td");
+            var reload = () => {
+                load_units();
+                load_economy();
+                var delay_in_seconds = parseInt(getURLParameter("delay"));
+                if (delay_in_seconds) {
+                    setTimeout(reload, delay_in_seconds * 1000);
+                }
+            };
 
-            values.text(d => d);
+            reload();
+        </script>
+    </body>
+</html>
 
-            values.exit().remove();
-            tbody.exit().remove();
-        });
-
-    var load_economy = () =>
-        d3.json("/resources", resources => {
-            // console.log(resources);
-            var table = d3.select("#resources");
-
-            var thead = table.select("thead");
-            thead.selectAll("tr").data([1]).enter().append('tr')
-                .selectAll('th')
-                .data(["resource", "current", "max", "+", "-", "(+)"]).enter()
-                .append('th')
-                .text(d => d);
-
-            var tbody = table.select("tbody").selectAll("tr").data(resources, resource => resource.id);
-            tbody.enter().append("tr");
-
-            var values = tbody.selectAll("td")
-                .data(r => [r.name, r.current.toFixed(0), r.storage.toFixed(0), r.income.toFixed(0), r.usage.toFixed(0), r.excess.toFixed(0)]);
-            values.enter().append("td");
-            values.text(d => d);
-            values.exit().remove();
-            tbody.exit().remove();
-        });
-
-    var reload = () => {
-        load_units();
-        load_economy();
-        var delay_in_seconds = parseInt(getURLParameter("delay"));
-        if (delay_in_seconds) {
-            setTimeout(reload, delay_in_seconds * 1000);
-        }
-    };
-
-    reload();
-</script>

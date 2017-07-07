@@ -36,5 +36,11 @@ defmodule TccAI.Web do
     |> send_resp(200, Poison.Encoder.encode(TccAI.Units.overview, []))
   end
 
+  get "/map" do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, Poison.Encoder.encode(TccAI.Map.get_contour_map(), []))
+  end
+
   forward "/", to: TccAI.StaticContent
 end
