@@ -1,6 +1,6 @@
-<table id="resources"></table>
+<table id="resources"><thead/><tbody/></table>
 
-<table id="units"></table>
+<table id="units"><thead/><tbody/></table>
 
 
 
@@ -17,24 +17,50 @@
 
     var load_units = () =>
         d3.json("/units", units => {
-            console.log(units);
-            var items = d3.select("#units").selectAll("tr").data(units, unit => unit.id);
-            var new_item = items.enter().append("tr");
-            new_item.append("td").text(d => d.id);
-            new_item.append("td").text(d => d.name);
-            new_item.append("td").text(d => d.health);
-            new_item.append("td").text(d => d.max_health);
-            new_item.append("td").text(d => d.isBuingBuilt ? "[building]" : "");
+            //console.log(units);
+            var table = d3.select("#units");
+
+            var thead = table.select("thead");
+            thead.selectAll("tr").data([1]).enter().append('tr')
+                .selectAll('th')
+                .data(["unit id", "name", "human name", "health", "max health"]).enter()
+                .append('th')
+                .text(d => d);
+
+            var tbody = table.select("tbody").selectAll("tr").data(units, unit => unit.id);
+            tbody.enter().append("tr");
+
+            var values = tbody.selectAll("td")
+                .data(unit => [unit.id, unit.name, unit.human_name, unit.health.toFixed(0), unit.max_health.toFixed(0)]);
+            values.enter().append("td");
+
+            values.text(d => d);
+
+            values.exit().remove();
+            tbody.exit().remove();
         });
 
     var load_economy = () =>
         d3.json("/resources", resources => {
-            console.log(resources);
-            var items = d3.select("#resources").selectAll("tr").data(resources, resource => resource.id);
-            var new_item = items.enter().append("tr");
-            new_item.append("td").text(d => d.name);
-            new_item.append("td").text(d => `${d.current} / ${d.storage}`);
-            new_item.append("td").text(d => `+ ${d.income} - ${d.usage} (-${d.excess})`);
+            // console.log(resources);
+            var table = d3.select("#resources");
+
+            var thead = table.select("thead");
+            thead.selectAll("tr").data([1]).enter().append('tr')
+                .selectAll('th')
+                .data(["resource", "current", "max", "+", "-", "(+)"]).enter()
+                .append('th')
+                .text(d => d);
+
+            var tbody = table.select("tbody").selectAll("tr").data(resources, resource => resource.id);
+            tbody.enter().append("tr");
+
+            var values = tbody.selectAll("td")
+                .data(r => [r.name, r.current.toFixed(0), r.storage.toFixed(0), r.income.toFixed(0), r.usage.toFixed(0), r.excess.toFixed(0)]);
+            values.enter().append("td");
+            values.text(d => d);
+            values.exit().remove();
+            tbody.exit().remove();
         });
 
     var reload = () => {
