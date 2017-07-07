@@ -5,12 +5,13 @@ defmodule TccAI do
 
   def start(_type, _opts) do
     team_id = System.get_env("AI_NR") || 0
+    engine_hostname = System.get_env("ENGINE_HOSTNAME") || "127.0.0.1"
 
     thisname = String.to_atom "hq#{team_id}"
     :net_kernel.start [thisname, :longnames]
 
     cookie = String.to_atom "erlang_ai#{team_id}"
-    enginename = {:foo, String.to_atom "#{cookie}@127.0.0.1"}
+    enginename = {:foo, String.to_atom "#{cookie}@#{engine_hostname}"}
     Logger.info "cookie: #{cookie}"
     Logger.info "engine: #{inspect(enginename)}"
 
