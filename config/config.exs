@@ -25,6 +25,7 @@ use Mix.Config
 
 config :logger, :console,
   level: :info,
-  format: "$time [$level]$levelpad $metadata $message\n",
-  metadata: [:module, :function, :line],
+  format: "$time [$level]$levelpad$metadata$message\n",
+  metadata: [:module],
   colors: [:enabled]
+  # metadata: [:module, :function, :line],
