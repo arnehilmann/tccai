@@ -3,7 +3,7 @@ defmodule TccAI.Emitter do
   use GenEvent
 
   def handle_event({topic, data}, state) do
-    IO.puts "Tadahhhh! #{inspect topic} : #{inspect data}"
+    IO.puts "#{inspect topic} : #{inspect data}"
     {:ok, state}
   end
 
