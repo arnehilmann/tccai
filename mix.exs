@@ -3,7 +3,7 @@ defmodule TccAI.Mixfile do
 
   def project do
     [app: :tccai,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "> 1.0.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -15,7 +15,7 @@ defmodule TccAI.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :cowboy, :plug],
+    [applications: [:logger, :cowboy, :plug, :con_cache],
      registered: [:commroom],
      mod: { TccAI, [] }]
   end
@@ -34,8 +34,9 @@ defmodule TccAI.Mixfile do
      {:cowboy, "> 0.0.0"},
      {:plug, "> 0.0.0"},
      {:poison, "> 0.0.0"},
+     {:con_cache, "> 0.0.0"},
+     {:dogma, "> 0.0.0", only: :dev},
      # {:credo, "~> 0.3", only: [:dev, :test]},
-     {:dogma, "~> 0.1", only: :dev},
     ]
   end
 end
