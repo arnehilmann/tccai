@@ -4,6 +4,7 @@ defmodule TccAI.Supervisor do
 
   def start_link(opts \\ []) do
     :supervisor.start_link(__MODULE__, opts)
+    ConCache.start_link([], [name: :unitdefs])
   end
 
   def init(opts) do
