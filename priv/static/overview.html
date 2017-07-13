@@ -50,7 +50,7 @@
                     var thead = table.select("thead");
                     thead.selectAll("tr").data([1]).enter().append('tr')
                         .selectAll('th')
-                        .data(["unit id", "name", "human name", "health", "max health"]).enter()
+                        .data(["unit id", "name", "human name", "rel_health", "max health", "pos"]).enter()
                         .append('th')
                         .text(d => d);
 
