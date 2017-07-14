@@ -20,7 +20,7 @@ Some Highlights
 
 * the elixir shell allows changes to the running AI
 
-* provides a small web server, showing a simple dashboard (unit list, resources, map overview)
+* provides a simple dashboard, with list of units, resources info, and map overview
 
 TODO
 ----
