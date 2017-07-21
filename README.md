@@ -25,12 +25,14 @@ Some Highlights
 TODO
 ----
 
-* better unit API
+* better unit and command API
 
-* caching of static information
+* caching of static information (started, using [con_cache](https://hexdocs.pm/con_cache/ConCache.html))
 
 * setup with separate containers for engine and AI
 
 * setup with multiple TccAI instances
 
 * implement simple logic, with mediocre resource handling
+
+* implement mediocre logic (perhaps with a neural network framework like [yanni](https://bitbucket.org/nato/yanni))
